@@ -27,7 +27,8 @@ public class Main {
 
                 // Testing finding character occurrences
 //                testFindOccurrences(puzzle, "a");
-                testFindOccurrences(puzzle, "e");
+                System.out.println(puzzle.getStringAtPosition(puzzle.findAllOccurrencesOfCharacter("e").top()));
+//                testFindOccurrences(puzzle, "e");
 //                testFindOccurrences(puzzle, "i");
             }
         } catch (IOException e) {

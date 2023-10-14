@@ -133,4 +133,63 @@ public class Puzzle {
         // If position is out of grid boundaries, return false
         return false;
     }
+
+
+    /**
+     * Finds and returns a stack of valid neighboring positions, based on a starting position and a search character.
+     *
+     * @param pos       the starting position to find neighbors around
+     * @param character the character to search for in neighboring positions
+     * @return a stack containing all valid neighboring positions containing the search character
+     */
+    public ArrayStack<Position> findValidNeighbors(Position pos, String character) {
+        // Create a stack to hold valid neighbor positions.
+        ArrayStack<Position> stack = new ArrayStack<>();
+
+        // Define relative positions of all possible neighbors (self, left, right, up, down, and 4 diagonals).
+        // Each array represents the [rowOffset, columnOffset] relative to the original position.
+        int[][] neighbors = {
+                {0, 0}, {-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+        };
+
+        // Loop over each possible relative neighbor.
+        for(int[] n : neighbors) {
+            // Calculate the absolute position of the neighbor by adding the offsets to the original position.
+            int newRow = pos.getRow() + n[0];
+            int newCol = pos.getColumn() + n[1];
+
+            // Validate if the neighbor is within the puzzle boundaries.
+            // - Row should be >= 0 and < total number of rows (nRows).
+            // - Column should be >= 0 and < total number of columns (nColumns).
+            if(newRow >= 0 && newRow < nRows && newCol >= 0 && newCol < nColumns) {
+                // Check if the neighbor contains the desired character.
+                // If true, add the neighbor's position to the stack.
+                if(isCharacterAtPosition(new Position(newRow, newCol), character)) {
+                    stack.push(new Position(newRow, newCol));
+                }
+            }
+        }
+
+        // Return the stack containing all valid neighbors.
+        return stack;
+    }
+
+
+    /**
+     * Retrieves the string at a specified position in the puzzle.
+     *
+     * @param pos A Position object containing the target row and column indices.
+     * @return The string found at the specified position in the puzzle.
+     */
+    public String getStringAtPosition(Position pos) {
+        // Ensure the position is within the bounds of the puzzle.
+        if (pos.getRow() >= 0 && pos.getRow() < nRows && pos.getColumn() >= 0 && pos.getColumn() < nColumns) {
+            // Return the string at the specified position.
+            return data[pos.getRow()][pos.getColumn()];
+        } else {
+            // If the position is out of bounds, return null or handle accordingly.
+            return null;
+        }
+    }
+
 }
