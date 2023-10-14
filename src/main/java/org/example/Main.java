@@ -7,37 +7,55 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java org.example.Main <input-file-path>");
+        // Check if filename is provided
+        if(args.length < 1) {
+            System.out.println("Please provide the filename as a command-line argument.");
             return;
         }
 
+        // Try to create a buffered reader for the file and parse the puzzles
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
-            ITextFileParser parser = new TextFileParser();
-
             while (true) {
-                IDataChunk chunk = parser.parseChunk(reader);
-                if (chunk == null) {
-                    break; // End of file reached
+                // Check if there are more puzzles to parse
+                reader.mark(1);
+                if (reader.read() == -1) {
+                    break;
                 }
+                reader.reset();
 
-                // Additional processing can be done here using the chunk data...
-                // Example: Print the data
-                printChunkData(chunk);
+                // Parse a puzzle and perform some operations
+                Puzzle puzzle = Puzzle.parsePuzzle(reader);
+                processPuzzle(puzzle);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void printChunkData(IDataChunk chunk) {
-        System.out.println("Table Data:");
-        for (List<String> row : chunk.getTable()) {
-            System.out.println(row);
-        }
+    /**
+     * Processes a parsed puzzle.
+     * For this example, it prints the table and the words of the puzzle.
+     *
+     * @param puzzle The puzzle to be processed.
+     */
+    private static void processPuzzle(Puzzle puzzle) {
+        // Print the puzzle
+//        System.out.println("Puzzle:");
+//        for (int i = 0; i < puzzle.getNumberOfRows(); i++) {
+//            for (int j = 0; j < puzzle.getNumberOfColumns(); j++) {
+//                System.out.print(puzzle.getElement(i, j) + " ");
+//            }
+//            System.out.println();
+//        }
 
-        System.out.println("Word List:");
-        System.out.println(chunk.getWords());
-        System.out.println("--------------");
+        // Print the words
+//        System.out.println("Words:");
+//        List<String> words = puzzle.getWords();
+//        for (String word : words) {
+//            System.out.println(word);
+//        }
+
+        // Add an empty line for better readability when printing multiple puzzles
+        System.out.println();
     }
 }
