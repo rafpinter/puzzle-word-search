@@ -68,6 +68,17 @@ public class Puzzle {
         return new Puzzle(data, words);
     }
 
+    // GETTERS
+    /**
+     * Provides the list of words associated with the puzzle.
+     *
+     * @return a list of words
+     */
+    public List<String> getWords() {
+        return words;
+    }
+
+
     /**
      * Finds all occurrences of a specific character within the data table
      * and returns their positions in a stack.
@@ -81,9 +92,10 @@ public class Puzzle {
         // Loop through each element in the data
         for (int i = 0; i < nRows; i++) {
             for (int j = 0; j < nColumns; j++) {
-                // If the character matches, add its position to the stack
-                if (data[i][j].equals(character)) {
-                    stack.push(new Position(i, j));
+                Position currentPosition = new Position(i, j);
+                // Utilize the isCharacterAtPosition method to check character equality
+                if (isCharacterAtPosition(currentPosition, character)) {
+                    stack.push(currentPosition);
                 }
             }
         }
@@ -104,11 +116,21 @@ public class Puzzle {
     }
 
     /**
-     * Provides the list of words associated with the puzzle.
+     * This method checks if the character at the specified position within
+     * the puzzle's grid matches the provided character.
      *
-     * @return a list of words
+     * @param position the position to check the character at
+     * @param character the character to check equality against
+     * @return true if characters match, false otherwise
      */
-    public List<String> getWords() {
-        return words;
+    public boolean isCharacterAtPosition(Position position, String character) {
+        // Validate the position to ensure it's within the grid boundaries
+        if (position.getRow() >= 0 && position.getRow() < nRows &&
+                position.getColumn() >= 0 && position.getColumn() < nColumns) {
+            // Check and return if the character at the position matches the provided character
+            return data[position.getRow()][position.getColumn()].equals(character);
+        }
+        // If position is out of grid boundaries, return false
+        return false;
     }
 }

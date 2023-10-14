@@ -36,25 +36,24 @@ public class Main {
     }
 
     // Helper method to test finding character occurrences
-    public static void testFindOccurrences(Puzzle puzzle, String character) {
-        System.out.println("Searching for character: " + character);
+    private static void testFindOccurrences(Puzzle puzzle, String character) {
+        // Call the findAllOccurrencesOfCharacter method from the Puzzle class
+        ArrayStack<Position> positions = puzzle.findAllOccurrencesOfCharacter(character);
 
-        // Ensure input character string is of length 1
-        if (character != null && character.length() == 1) {
-            ArrayStack<Position> positions = puzzle.findAllOccurrencesOfCharacter(character);
+        // Check if any occurrences were found
+        if (positions.size() > 0) {
+            System.out.println("Occurrences of '" + character + "' found at positions: ");
 
-            // Check if the stack is not empty
-            if (!positions.isEmpty()) {
-                System.out.println("Positions of character '" + character + "': ");
-                while (!positions.isEmpty()) {
-                    System.out.println(positions.pop());
-                }
-            } else {
-                System.out.println("Character '" + character + "' not found in the puzzle.");
+            // Loop through all the positions in the stack and print them
+            while (!positions.isEmpty()) {
+                Position pos = positions.pop();
+                System.out.println("Row: " + pos.getRow() + ", Column: " + pos.getColumn());
             }
         } else {
-            System.out.println("Invalid input: single character expected.");
+            System.out.println("No occurrences of '" + character + "' found in the puzzle.");
         }
-        System.out.println();
     }
+
+
+
 }
