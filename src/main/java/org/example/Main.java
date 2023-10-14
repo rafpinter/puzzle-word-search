@@ -1,19 +1,43 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+        if (args.length != 1) {
+            System.out.println("Usage: java org.example.Main <input-file-path>");
+            return;
         }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
+            ITextFileParser parser = new TextFileParser();
+
+            while (true) {
+                IDataChunk chunk = parser.parseChunk(reader);
+                if (chunk == null) {
+                    break; // End of file reached
+                }
+
+                // Additional processing can be done here using the chunk data...
+                // Example: Print the data
+                printChunkData(chunk);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void printChunkData(IDataChunk chunk) {
+        System.out.println("Table Data:");
+        for (List<String> row : chunk.getTable()) {
+            System.out.println(row);
+        }
+
+        System.out.println("Word List:");
+        System.out.println(chunk.getWords());
+        System.out.println("--------------");
     }
 }
