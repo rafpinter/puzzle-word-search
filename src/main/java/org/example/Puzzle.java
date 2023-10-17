@@ -2,6 +2,7 @@ package org.example;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,6 +191,78 @@ public class Puzzle {
             // If the position is out of bounds, return null or handle accordingly.
             return null;
         }
+    }
+
+
+    /**
+     * Validates if the characters at the given positions form the specified word.
+     * @param positionsDeque An ArrayDeque of positions in the puzzle.
+     * @param word The word to validate against.
+     * @return True if the characters at the positions form the target word; false otherwise.
+     */
+    public boolean validateWord(ArrayDeque<Position> positionsDeque, String word) {
+        StringBuilder concatQueue = new StringBuilder();
+
+        ArrayDeque<Position> positionsDequeCopy = new ArrayDeque<>();
+        positionsDequeCopy = positionsDeque.clone();
+
+        // Create a temporary stack to retain the original order of positionsStack
+        ArrayStack<Position> tempStack = new ArrayStack<>();
+
+        // Pop each position from the stack, get the corresponding character from the puzzle and build the string
+        while (!positionsDeque.isEmpty()) {
+            Position pos = positionsDeque.removeFirst();
+            String ch = data[pos.getRow()][pos.getColumn()];
+            concatQueue.append(ch);
+
+            // Push to temp stack for restoring order later
+            tempStack.push(pos);
+        }
+
+        // Restore the order in positionsStack
+        while (!tempStack.isEmpty()) {
+            positionsDeque.addFirst(tempStack.pop());
+        }
+
+        if (concatQueue.toString().equals(word)) {
+            System.out.println(word + ": ");
+            for (Position item : positionsDequeCopy) {
+                System.out.println(item.getPositionString());
+            }
+        }
+
+        // Compare the constructed string with the word
+        return concatQueue.toString().equals(word);
+    }
+
+
+    public boolean computeTreeOfWords(ArrayDeque<Position> positionsDeque, String targetWord, int i) {
+        if (positionsDeque.size() == targetWord.length()) {
+            boolean is_valid = validateWord(positionsDeque, targetWord);
+            if (is_valid) {
+                System.out.println(targetWord);
+
+            }
+        }
+        if (i == targetWord.length()) {
+            return false;
+        }
+
+        // initializing neighbors
+        ArrayStack<Position> neighbors = new ArrayStack<>();
+        char character = targetWord.charAt(i);
+        neighbors = findValidNeighbors(positionsDeque.getLast(), "" + character);
+
+        if (neighbors.isEmpty()) {
+            return false;
+        }
+
+        while (!neighbors.isEmpty()) {
+            positionsDeque.addLast(neighbors.pop());
+        }
+        computeTreeOfWords(positionsDeque, targetWord, i + 1);
+        positionsDeque.removeLast();
+        return true;
     }
 
 }

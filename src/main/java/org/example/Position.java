@@ -37,4 +37,8 @@ public class Position {
     public int getColumn() {
         return this.column;
     }
+
+    public String getPositionString() {
+        return "(" + row + ", " + column + ") ";
+    }
 }
