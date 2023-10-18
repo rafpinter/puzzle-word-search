@@ -5,9 +5,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 
+/**
+ * The Main class is the entry point for the word puzzle search program.
+ * The program takes in a file path as a command line argument,
+ * reads the content of the file, and for each puzzle specified in the file,
+ * it looks for the words specified and their occurrence patterns.
+ */
 public class Main {
 
+    /**
+     * Entry point for the application.
+     *
+     * @param args Command line arguments. Expects the first argument to be the path to the puzzle file.
+     */
     public static void main(String[] args) {
+
         // Check if file path is provided as command line argument
         if (args.length < 1) {
             System.out.println("Please provide the file path as a command line argument.");
@@ -16,47 +28,47 @@ public class Main {
 
         String filePath = args[0];
 
+        // Attempt to read the provided file and process the puzzles
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
             Puzzle puzzle;
+            int puzzleCounter = 1; // Counter to keep track of the number of puzzles processed
 
-
-            int puzzleCounter = 1;
-            // Process each chunk of data in the file
+            // Process each chunk of data in the file. Each chunk represents a puzzle.
             while ((puzzle = Puzzle.parseChunk(reader)) != null) {
 
                 System.out.println("Query " + puzzleCounter + ":");
-//                // Printing the puzzle
-//                System.out.println("Puzzle: ");
-//                puzzle.printPuzzle();
-//                System.out.println("Words: " + puzzle.getWords());
 
-                // Word to find - loop
+                // For each word in the current puzzle, try to find its occurrence pattern
                 for (String word : puzzle.getWords()) {
-                    // Your logic here using the word
-//                    System.out.println("Searching for: " + word);  // Example: Just printing the word
 
-                    // first character
+                    // Determine the first character of the current word
                     String firstCharacter = String.valueOf(word.charAt(0));
-                    ArrayStack<Position> firstCharacterPositions = puzzle.findAllOccurrencesOfCharacter(firstCharacter);
-//                    System.out.println("Printing first character positions for " + word + ": ");
-//                    puzzle.printStackOfPositions(firstCharacterPositions);
 
-                    while (!firstCharacterPositions.isEmpty()){
-                        // pegando a primeira posição
+                    // Find all positions of the first character of the word in the puzzle
+                    ArrayStack<Position> firstCharacterPositions = puzzle.findAllOccurrencesOfCharacter(firstCharacter);
+
+                    // For each position of the first character, try to determine the pattern of the word
+                    while (!firstCharacterPositions.isEmpty()) {
+
+                        // Get the next position of the first character
                         Position firstPosition = firstCharacterPositions.pop();
 
-                        // adicionando a stack
+                        // Initialize a position deque with the found position as the starting point
                         ArrayDeque<Position> positions = new ArrayDeque<>();
                         positions.addFirst(firstPosition);
 
+                        // Attempt to find the pattern of the word starting from the current position of its first character
                         for (int i = 1; i < word.length(); i++) {
                             puzzle.computeTreeOfWords(positions, word, i);
                         }
                     }
                 }
-                puzzleCounter++;
+
+                puzzleCounter++; // Move to the next puzzle
             }
-        } catch (IOException e) {
+
+        } catch (IOException e) {  // Catch any IO exceptions and print the stack trace for debugging
             e.printStackTrace();
         }
     }

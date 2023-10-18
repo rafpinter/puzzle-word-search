@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class represents a puzzle which contains a table of characters
- * and a list of words. It is capable of parsing a chunk of data from a BufferedReader
- * and can find all occurrences of a specific character within the table.
+ * Represents a character puzzle comprising a table of characters and a list of words.
+ * Provides utilities to parse the puzzle data from a BufferedReader,
+ * find occurrences of characters, and more.
  */
 public class Puzzle {
 
@@ -20,10 +20,10 @@ public class Puzzle {
     private final List<String> words;
 
     /**
-     * Constructor of Puzzle class which initializes its attributes.
+     * Constructs a new Puzzle instance.
      *
-     * @param data   2D array of strings representing the character table
-     * @param words  list of words
+     * @param data  A 2D array representing the character table of the puzzle.
+     * @param words A list of words associated with the puzzle.
      */
     public Puzzle(String[][] data, List<String> words) {
         this.nRows = data.length;
@@ -33,48 +33,56 @@ public class Puzzle {
     }
 
     /**
-     * Parses a chunk of data from a BufferedReader and constructs a Puzzle object.
+     * Parses a BufferedReader to extract puzzle data and constructs a Puzzle object.
      *
-     * @param reader the BufferedReader from which to read the data
-     * @return a Puzzle object or null if end of file is reached
-     * @throws IOException if an I/O error occurs
+     * @param reader The BufferedReader containing the puzzle data.
+     * @return A Puzzle object or null if the end of file is reached.
+     * @throws IOException if an I/O error occurs during reading.
      */
     public static Puzzle parseChunk(BufferedReader reader) throws IOException {
+
+        // Read the first line to determine the dimensions of the puzzle
         String line = reader.readLine();
         if (line == null) {
-            return null;
+            return null;  // No more data to read
         }
 
+        // Extract number of rows and columns from the line
         String[] dimensions = line.split(" ");
         int nRows = Integer.parseInt(dimensions[0]);
         int nColumns = Integer.parseInt(dimensions[1]);
 
+        // Initialize a 2D array to store the puzzle data
         String[][] data = new String[nRows][nColumns];
 
+        // Read each row of the puzzle and populate the 2D array
         for (int i = 0; i < nRows; i++) {
             line = reader.readLine();
             if (line != null) {
-                data[i] = line.split(" ");
+                data[i] = line.split(" ");  // Extract individual pieces of data from the read line
             }
         }
 
+        // Read the next line containing the list of words to search
         line = reader.readLine();
         List<String> words = new ArrayList<>();
         if (line != null) {
             String[] wordsArray = line.split(" ");
             for (String word : wordsArray) {
-                words.add(word);
+                words.add(word);  // Populate the list with words
             }
         }
 
+        // Return a new Puzzle object with the parsed data and words
         return new Puzzle(data, words);
     }
 
-    // GETTERS
+
+
     /**
-     * Provides the list of words associated with the puzzle.
+     * Returns the list of words associated with the puzzle.
      *
-     * @return a list of words
+     * @return A list of words.
      */
     public List<String> getWords() {
         return words;
@@ -82,11 +90,10 @@ public class Puzzle {
 
 
     /**
-     * Finds all occurrences of a specific character within the data table
-     * and returns their positions in a stack.
+     * Searches the puzzle data for all occurrences of a specific character.
      *
-     * @param character the character to be found
-     * @return a stack containing the positions of the character
+     * @param character The character to be located in the puzzle.
+     * @return A stack containing positions of the specified character.
      */
     public ArrayStack<Position> findAllOccurrencesOfCharacter(String character) {
         ArrayStack<Position> stack = new ArrayStack<>();
@@ -105,25 +112,13 @@ public class Puzzle {
         return stack;
     }
 
-    /**
-     * Prints the character table of the puzzle.
-     */
-    public void printPuzzle() {
-        for (int i = 0; i < nRows; i++) {
-            for (int j = 0; j < nColumns; j++) {
-                System.out.print(data[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     /**
-     * This method checks if the character at the specified position within
-     * the puzzle's grid matches the provided character.
+     * Determines if the character at a specified position matches the provided character.
      *
-     * @param position the position to check the character at
-     * @param character the character to check equality against
-     * @return true if characters match, false otherwise
+     * @param position  The position within the puzzle's grid to check.
+     * @param character The character for comparison.
+     * @return True if the characters match, otherwise false.
      */
     public boolean isCharacterAtPosition(Position position, String character) {
         // Validate the position to ensure it's within the grid boundaries
@@ -138,11 +133,11 @@ public class Puzzle {
 
 
     /**
-     * Finds and returns a stack of valid neighboring positions, based on a starting position and a search character.
+     * Finds valid neighboring positions of a given position containing the specified character.
      *
-     * @param pos       the starting position to find neighbors around
-     * @param character the character to search for in neighboring positions
-     * @return a stack containing all valid neighboring positions containing the search character
+     * @param pos       The starting position for the search.
+     * @param character The character to identify valid neighbors.
+     * @return A stack containing valid neighboring positions.
      */
     public ArrayStack<Position> findValidNeighbors(Position pos, String character) {
         // Create a stack to hold valid neighbor positions.
@@ -177,29 +172,12 @@ public class Puzzle {
     }
 
 
-    /**
-     * Retrieves the string at a specified position in the puzzle.
-     *
-     * @param pos A Position object containing the target row and column indices.
-     * @return The string found at the specified position in the puzzle.
-     */
-    public String getStringAtPosition(Position pos) {
-        // Ensure the position is within the bounds of the puzzle.
-        if (pos.getRow() >= 0 && pos.getRow() < nRows && pos.getColumn() >= 0 && pos.getColumn() < nColumns) {
-            // Return the string at the specified position.
-            return data[pos.getRow()][pos.getColumn()];
-        } else {
-            // If the position is out of bounds, return null or handle accordingly.
-            return null;
-        }
-    }
-
 
     /**
-     * Prints the word followed by a sequence of positions in the format:
-     * word: (row1,col1)->(row2,col2)->...->(rowN,colN)
+     * Constructs and prints a representation of the specified word using a sequence of positions.
      *
-     * @param positionsDeque The deque containing the sequence of positions.
+     * @param word           The word to represent.
+     * @param positionsDeque The sequence of positions forming the word.
      */
     public static void printDequeOfPositions(String word, ArrayDeque<Position> positionsDeque) {
         // Using StringBuilder for efficient string concatenation.
@@ -226,116 +204,81 @@ public class Puzzle {
 
 
     /**
-     * Prints a sequence of positions in the format:
-     * (row1,col1)->(row2,col2)->...->(rowN,colN)
+     * Checks if the characters at the specified positions form the given word.
      *
-     * @param positionsStack The stack containing the sequence of positions.
-     */
-    public static void printStackOfPositions(ArrayStack<Position> positionsStack) {
-        // Using StringBuilder for efficient string concatenation.
-        StringBuilder output = new StringBuilder();
-
-        // Creating a copy of the original stack to avoid modifying the original.
-        ArrayStack<Position> tempStack = new ArrayStack<>(positionsStack.size());
-        ArrayStack<Position> reversedStack = new ArrayStack<>(positionsStack.size());
-
-        while (!positionsStack.isEmpty()) {
-            tempStack.push(positionsStack.pop());
-        }
-
-        // Reverse the stack, so we can print in the original order.
-        while (!tempStack.isEmpty()) {
-            reversedStack.push(tempStack.pop());
-        }
-
-        // Loop through the positions in the reversed stack.
-        while (!reversedStack.isEmpty()) {
-            Position position = reversedStack.pop();
-
-            // Restore the original stack.
-            positionsStack.push(position);
-
-            // Append the string representation of the current position.
-            output.append(position.getPositionString());
-
-            // If there are more positions, append an arrow.
-            if (!reversedStack.isEmpty()) {
-                output.append(", ");
-            }
-        }
-
-        // Print the concatenated string.
-        System.out.println(output.toString());
-    }
-
-
-    /**
-     * Validates if the characters at the given positions form the specified word.
-     * @param positionsDeque An ArrayDeque of positions in the puzzle.
-     * @param word The word to validate against.
-     * @return True if the characters at the positions form the target word; false otherwise.
+     * @param positionsDeque The sequence of positions to be validated.
+     * @param word           The target word for validation.
+     * @return True if the sequence of characters matches the word, otherwise false.
      */
     public boolean validateWord(ArrayDeque<Position> positionsDeque, String word) {
-        StringBuilder concatQueue = new StringBuilder();
+        StringBuilder constructedWord = new StringBuilder();
 
-        ArrayDeque<Position> positionsDequeCopy = new ArrayDeque<>();
-        positionsDequeCopy = positionsDeque.clone();
+        // Clone the positionsDeque to avoid altering the original while processing
+        ArrayDeque<Position> positionsDequeCopy = positionsDeque.clone();
 
-        // Create a temporary stack to retain the original order of positionsStack
+        // Temporary stack to retain the original order of positionsDeque
         ArrayStack<Position> tempStack = new ArrayStack<>();
 
-        // Pop each position from the stack, get the corresponding character from the puzzle and build the string
+        // Process each position from the deque to construct the word
         while (!positionsDeque.isEmpty()) {
             Position pos = positionsDeque.removeFirst();
             String ch = data[pos.getRow()][pos.getColumn()];
-            concatQueue.append(ch);
+            constructedWord.append(ch);
 
-            // Push to temp stack for restoring order later
+            // Push position to temp stack to restore order later
             tempStack.push(pos);
         }
 
-        // Restore the order in positionsStack
+        // Restore the order in the original positionsDeque
         while (!tempStack.isEmpty()) {
             positionsDeque.addFirst(tempStack.pop());
         }
 
-        if (concatQueue.toString().equals(word)) {
+        // If the constructed word matches the provided word, print the sequence of positions
+        if (constructedWord.toString().equals(word)) {
             printDequeOfPositions(word, positionsDequeCopy);
         }
 
-        // Compare the constructed string with the word
-//        System.out.println("Validating: " + concatQueue.toString() + " at " + i);
-        return concatQueue.toString().equals(word);
+        // Return whether the constructed word matches the provided word
+        return constructedWord.toString().equals(word);
     }
 
 
 
+    /**
+     * Computes possible sequences of positions to form the target word.
+     *
+     * @param positionsDeque A deque containing the current sequence of positions.
+     * @param targetWord     The word to be formed.
+     * @param i              The current character index of the target word being processed.
+     */
     public void computeTreeOfWords(ArrayDeque<Position> positionsDeque, String targetWord, int i) {
-//        validateWord(positionsDeque, targetWord, i);
+
+        // Check if the current sequence of positions forms the target word
         if (positionsDeque.size() == targetWord.length()) {
             boolean is_valid = validateWord(positionsDeque, targetWord);
+            // Note: The is_valid variable is computed, but not used in this snippet.
         }
+
+        // If we've processed each character in the target word, end the recursive call
         if (i == targetWord.length()) {
             return;
         }
 
-        // initializing neighbors
-        ArrayStack<Position> neighbors = new ArrayStack<>();
+        // Search for valid neighboring positions that match the current character of the target word
         char character = targetWord.charAt(i);
-        neighbors = findValidNeighbors(positionsDeque.getLast(), "" + character);
-//        System.out.println("Neighbors of '" + character  + "' at " + i);
-//        printStackOfPositions(neighbors);
+        ArrayStack<Position> neighbors = findValidNeighbors(positionsDeque.getLast(), "" + character);
 
-
+        // If no valid neighbors are found, end the recursive call
         if (neighbors.isEmpty()) {
             return;
         }
 
+        // For each valid neighbor, recursively try to form the remainder of the target word
         while (!neighbors.isEmpty()) {
             positionsDeque.addLast(neighbors.pop());
             computeTreeOfWords(positionsDeque, targetWord, i + 1);
             positionsDeque.removeLast();
         }
-//        return true;
     }
-}
+    }

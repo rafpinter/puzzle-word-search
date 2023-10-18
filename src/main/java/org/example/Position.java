@@ -1,19 +1,24 @@
 package org.example;
 
 /**
- * The Position class represents a position within a 2D grid through two integer values: row and column.
+ * Represents a coordinate position within a two-dimensional grid.
+ * This class captures a position through its row and column indices.
+ *
+ * For example, a Position object with row 2 and column 3 represents the coordinate (2, 3) in the grid.
  */
 public class Position {
-    // Row index of the position
+
+    // The row index of the position in the grid.
     private final int row;
-    // Column index of the position
+
+    // The column index of the position in the grid.
     private final int column;
 
     /**
-     * Constructor that initializes a new Position object with specified row and column indices.
+     * Initializes a new Position object with specified row and column indices.
      *
-     * @param row    the row index
-     * @param column the column index
+     * @param row    The zero-based row index of the position.
+     * @param column The zero-based column index of the position.
      */
     public Position(int row, int column) {
         this.row = row;
@@ -21,23 +26,28 @@ public class Position {
     }
 
     /**
-     * Gets the row index of this position.
+     * Retrieves the row index associated with this position.
      *
-     * @return the row index
+     * @return The zero-based row index.
      */
     public int getRow() {
         return this.row;
     }
 
     /**
-     * Gets the column index of this position.
+     * Retrieves the column index associated with this position.
      *
-     * @return the column index
+     * @return The zero-based column index.
      */
     public int getColumn() {
         return this.column;
     }
 
+    /**
+     * Provides a string representation of the position in the format: (row,column).
+     *
+     * @return A string that represents the position's coordinates.
+     */
     public String getPositionString() {
         return "(" + row + "," + column + ")";
     }
