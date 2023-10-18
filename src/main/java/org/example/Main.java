@@ -38,6 +38,8 @@ public class Main {
                     // first character
                     String firstCharacter = String.valueOf(word.charAt(0));
                     ArrayStack<Position> firstCharacterPositions = puzzle.findAllOccurrencesOfCharacter(firstCharacter);
+//                    System.out.println("Printing first character positions for " + word + ": ");
+//                    puzzle.printStackOfPositions(firstCharacterPositions);
 
                     while (!firstCharacterPositions.isEmpty()){
                         // pegando a primeira posição

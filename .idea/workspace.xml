@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e8fc4d9-2d39-4112-98d5-aec273736b93" name="Changes" comment="Fixing print (commenting word)">
+    <list default="true" id="9e8fc4d9-2d39-4112-98d5-aec273736b93" name="Changes" comment="printing deque function">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/inputs/TP1Input1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/inputs/TP1Input3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Puzzle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +57,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/rafaelapinter/Library/Mobile Documents/com~apple~CloudDocs/1.UdeM/IFT2015/tp1/word-search-ift2015/src/main/java/org/example",
+    "last_opened_file_path": "/Users/rafaelapinter/Library/Mobile Documents/com~apple~CloudDocs/1.UdeM/IFT2015/tp1/word-search-ift2015/src/main/java/org/example/inputs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -67,8 +70,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/org/example" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/inputs" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/example" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/org/example" />
@@ -88,7 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697219367096</updated>
       <workItem from="1697219368354" duration="10887000" />
-      <workItem from="1697249530703" duration="32052000" />
+      <workItem from="1697249530703" duration="37924000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -178,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697596016760</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="printing deque function">
+      <option name="closed" value="true" />
+      <created>1697596379967</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1697596379967</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +218,8 @@
     <MESSAGE value="simple example working :)" />
     <MESSAGE value="Fixing print" />
     <MESSAGE value="Fixing print (commenting word)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing print (commenting word)" />
+    <MESSAGE value="printing deque function" />
+    <option name="LAST_COMMIT_MESSAGE" value="printing deque function" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

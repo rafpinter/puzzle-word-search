@@ -199,7 +199,6 @@ public class Puzzle {
      * Prints the word followed by a sequence of positions in the format:
      * word: (row1,col1)->(row2,col2)->...->(rowN,colN)
      *
-     * @param word The word associated with the sequence of positions.
      * @param positionsDeque The deque containing the sequence of positions.
      */
     public static void printDequeOfPositions(String word, ArrayDeque<Position> positionsDeque) {
@@ -217,6 +216,51 @@ public class Puzzle {
             // If there's another position after the current one, append an arrow.
             if (iterator.hasNext()) {
                 output.append("->");
+            }
+        }
+
+        // Print the concatenated string.
+        System.out.println(output.toString());
+    }
+
+
+
+    /**
+     * Prints a sequence of positions in the format:
+     * (row1,col1)->(row2,col2)->...->(rowN,colN)
+     *
+     * @param positionsStack The stack containing the sequence of positions.
+     */
+    public static void printStackOfPositions(ArrayStack<Position> positionsStack) {
+        // Using StringBuilder for efficient string concatenation.
+        StringBuilder output = new StringBuilder();
+
+        // Creating a copy of the original stack to avoid modifying the original.
+        ArrayStack<Position> tempStack = new ArrayStack<>(positionsStack.size());
+        ArrayStack<Position> reversedStack = new ArrayStack<>(positionsStack.size());
+
+        while (!positionsStack.isEmpty()) {
+            tempStack.push(positionsStack.pop());
+        }
+
+        // Reverse the stack, so we can print in the original order.
+        while (!tempStack.isEmpty()) {
+            reversedStack.push(tempStack.pop());
+        }
+
+        // Loop through the positions in the reversed stack.
+        while (!reversedStack.isEmpty()) {
+            Position position = reversedStack.pop();
+
+            // Restore the original stack.
+            positionsStack.push(position);
+
+            // Append the string representation of the current position.
+            output.append(position.getPositionString());
+
+            // If there are more positions, append an arrow.
+            if (!reversedStack.isEmpty()) {
+                output.append(", ");
             }
         }
 
@@ -260,11 +304,14 @@ public class Puzzle {
         }
 
         // Compare the constructed string with the word
+//        System.out.println("Validating: " + concatQueue.toString() + " at " + i);
         return concatQueue.toString().equals(word);
     }
 
 
+
     public void computeTreeOfWords(ArrayDeque<Position> positionsDeque, String targetWord, int i) {
+//        validateWord(positionsDeque, targetWord, i);
         if (positionsDeque.size() == targetWord.length()) {
             boolean is_valid = validateWord(positionsDeque, targetWord);
         }
@@ -276,6 +323,9 @@ public class Puzzle {
         ArrayStack<Position> neighbors = new ArrayStack<>();
         char character = targetWord.charAt(i);
         neighbors = findValidNeighbors(positionsDeque.getLast(), "" + character);
+//        System.out.println("Neighbors of '" + character  + "' at " + i);
+//        printStackOfPositions(neighbors);
+
 
         if (neighbors.isEmpty()) {
             return;
@@ -283,9 +333,9 @@ public class Puzzle {
 
         while (!neighbors.isEmpty()) {
             positionsDeque.addLast(neighbors.pop());
+            computeTreeOfWords(positionsDeque, targetWord, i + 1);
+            positionsDeque.removeLast();
         }
-        computeTreeOfWords(positionsDeque, targetWord, i + 1);
-        positionsDeque.removeLast();
 //        return true;
     }
 }
