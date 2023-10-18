@@ -20,14 +20,15 @@ public class Main {
             Puzzle puzzle;
 
 
-            System.out.println("1");
+            int puzzleCounter = 1;
             // Process each chunk of data in the file
             while ((puzzle = Puzzle.parseChunk(reader)) != null) {
-                System.out.println("2");
-                // Printing the puzzle
-                System.out.println("Puzzle: ");
-                puzzle.printPuzzle();
-                System.out.println("Words: " + puzzle.getWords());
+
+                System.out.println("Query " + puzzleCounter + ":");
+//                // Printing the puzzle
+//                System.out.println("Puzzle: ");
+//                puzzle.printPuzzle();
+//                System.out.println("Words: " + puzzle.getWords());
 
                 // Word to find - loop
                 for (String word : puzzle.getWords()) {
@@ -51,6 +52,7 @@ public class Main {
                         }
                     }
                 }
+                puzzleCounter++;
             }
         } catch (IOException e) {
             e.printStackTrace();

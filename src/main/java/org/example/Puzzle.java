@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -225,27 +226,30 @@ public class Puzzle {
         }
 
         if (concatQueue.toString().equals(word)) {
-            System.out.println(word + ": ");
-            for (Position item : positionsDequeCopy) {
-                System.out.println(item.getPositionString());
+            String output = word + ": ";
+            Iterator<Position> iterator = positionsDequeCopy.iterator();
+
+            while (iterator.hasNext()) {
+                output += iterator.next().getPositionString();
+                if (iterator.hasNext()) {
+                    output += "->";
+                }
             }
+            System.out.println(output);
         }
+
 
         // Compare the constructed string with the word
         return concatQueue.toString().equals(word);
     }
 
 
-    public boolean computeTreeOfWords(ArrayDeque<Position> positionsDeque, String targetWord, int i) {
+    public void computeTreeOfWords(ArrayDeque<Position> positionsDeque, String targetWord, int i) {
         if (positionsDeque.size() == targetWord.length()) {
             boolean is_valid = validateWord(positionsDeque, targetWord);
-            if (is_valid) {
-                System.out.println(targetWord);
-
-            }
         }
         if (i == targetWord.length()) {
-            return false;
+            return;
         }
 
         // initializing neighbors
@@ -254,7 +258,7 @@ public class Puzzle {
         neighbors = findValidNeighbors(positionsDeque.getLast(), "" + character);
 
         if (neighbors.isEmpty()) {
-            return false;
+            return;
         }
 
         while (!neighbors.isEmpty()) {
@@ -262,7 +266,6 @@ public class Puzzle {
         }
         computeTreeOfWords(positionsDeque, targetWord, i + 1);
         positionsDeque.removeLast();
-        return true;
+//        return true;
     }
-
 }

@@ -39,6 +39,6 @@ public class Position {
     }
 
     public String getPositionString() {
-        return "(" + row + ", " + column + ") ";
+        return "(" + row + "," + column + ")";
     }
 }
