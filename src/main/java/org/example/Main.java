@@ -31,22 +31,22 @@ public class Main {
         // Attempt to read the provided file and process the puzzles
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
-            Puzzle puzzle;
+            WordPuzzle wordPuzzle;
             int puzzleCounter = 1; // Counter to keep track of the number of puzzles processed
 
             // Process each chunk of data in the file. Each chunk represents a puzzle.
-            while ((puzzle = Puzzle.parseChunk(reader)) != null) {
+            while ((wordPuzzle = WordPuzzle.parseChunk(reader)) != null) {
 
                 System.out.println("Query " + puzzleCounter + ":");
 
                 // For each word in the current puzzle, try to find its occurrence pattern
-                for (String word : puzzle.getWords()) {
+                for (String word : wordPuzzle.getWords()) {
 
                     // Determine the first character of the current word
                     String firstCharacter = String.valueOf(word.charAt(0));
 
                     // Find all positions of the first character of the word in the puzzle
-                    ArrayStack<Position> firstCharacterPositions = puzzle.findAllOccurrencesOfCharacter(firstCharacter);
+                    ArrayStack<Position> firstCharacterPositions = wordPuzzle.findAllOccurrencesOfCharacter(firstCharacter);
 
                     // For each position of the first character, try to determine the pattern of the word
                     while (!firstCharacterPositions.isEmpty()) {
@@ -60,7 +60,7 @@ public class Main {
 
                         // Attempt to find the pattern of the word starting from the current position of its first character
                         for (int i = 1; i < word.length(); i++) {
-                            puzzle.computeTreeOfWords(positions, word, i);
+                            wordPuzzle.computeTreeOfWords(positions, word, i);
                         }
                     }
                 }
