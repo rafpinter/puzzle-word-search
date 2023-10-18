@@ -196,6 +196,36 @@ public class Puzzle {
 
 
     /**
+     * Prints the word followed by a sequence of positions in the format:
+     * word: (row1,col1)->(row2,col2)->...->(rowN,colN)
+     *
+     * @param word The word associated with the sequence of positions.
+     * @param positionsDeque The deque containing the sequence of positions.
+     */
+    public static void printDequeOfPositions(String word, ArrayDeque<Position> positionsDeque) {
+        // Using StringBuilder for efficient string concatenation.
+        StringBuilder output = new StringBuilder(word + ": ");
+
+        // Initialize iterator for positionsDeque to sequentially access its items.
+        Iterator<Position> iterator = positionsDeque.iterator();
+
+        // Loop through the positions in the deque.
+        while (iterator.hasNext()) {
+            // Append the string representation of the next position.
+            output.append(iterator.next().getPositionString());
+
+            // If there's another position after the current one, append an arrow.
+            if (iterator.hasNext()) {
+                output.append("->");
+            }
+        }
+
+        // Print the concatenated string.
+        System.out.println(output.toString());
+    }
+
+
+    /**
      * Validates if the characters at the given positions form the specified word.
      * @param positionsDeque An ArrayDeque of positions in the puzzle.
      * @param word The word to validate against.
@@ -226,18 +256,8 @@ public class Puzzle {
         }
 
         if (concatQueue.toString().equals(word)) {
-            String output = word + ": ";
-            Iterator<Position> iterator = positionsDequeCopy.iterator();
-
-            while (iterator.hasNext()) {
-                output += iterator.next().getPositionString();
-                if (iterator.hasNext()) {
-                    output += "->";
-                }
-            }
-            System.out.println(output);
+            printDequeOfPositions(word, positionsDequeCopy);
         }
-
 
         // Compare the constructed string with the word
         return concatQueue.toString().equals(word);
