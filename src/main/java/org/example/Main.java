@@ -33,7 +33,7 @@ public class Main {
                 // Word to find - loop
                 for (String word : puzzle.getWords()) {
                     // Your logic here using the word
-                    System.out.println("Searching for: " + word);  // Example: Just printing the word
+//                    System.out.println("Searching for: " + word);  // Example: Just printing the word
 
                     // first character
                     String firstCharacter = String.valueOf(word.charAt(0));
