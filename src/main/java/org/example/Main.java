@@ -65,6 +65,8 @@ public class Main {
                     }
                 }
 
+                wordPuzzle.printSortedPaths(); // Printing sorted paths
+
                 puzzleCounter++; // Move to the next puzzle
             }
 

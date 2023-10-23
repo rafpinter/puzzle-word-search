@@ -6,6 +6,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collections;
 
 /**
  * Represents a character puzzle comprising a table of characters and a list of words.
@@ -19,6 +20,8 @@ public class WordPuzzle implements Puzzle {
     private final String[][] data;
     private final List<String> words;
 
+    public ArrayList<String> paths;
+
     /**
      * Constructs a new Puzzle instance.
      *
@@ -30,6 +33,7 @@ public class WordPuzzle implements Puzzle {
         this.nColumns = data[0].length;
         this.data = data;
         this.words = words;
+        this.paths = new ArrayList<>();
     }
 
     /**
@@ -198,9 +202,42 @@ public class WordPuzzle implements Puzzle {
         }
 
         // Print the concatenated string.
-        System.out.println(output.toString());
+//        System.out.println(output.toString());
+        // Add the concatenated string to the paths list.
+        this.paths.add(output.toString());
     }
 
+
+    /**
+     * Sorts the paths list alphabetically.
+     *
+     * This method uses Java's built-in Collections.sort() function to
+     * arrange the strings inside the paths list in lexicographic order.
+     * It modifies the original list, so after calling this method,
+     * accessing the paths list will give the sorted paths.
+     */
+    public void sortPathsAlphabetically() {
+        // Use Collections.sort() to sort the paths list in place
+        Collections.sort(this.paths);
+    }
+
+    /**
+     * Prints the paths list in lexicographic order.
+     *
+     * This method first sorts the paths list alphabetically using
+     * the sortPathsAlphabetically function. Then, it iterates over
+     * each path and prints it. This ensures that the output is always
+     * presented in a sorted manner.
+     */
+    public void printSortedPaths() {
+        // First, sort the paths list alphabetically
+        sortPathsAlphabetically();
+
+        // Iterate over each path in the sorted paths list and print it
+        for(String path : paths) {
+            System.out.println(path);
+        }
+    }
 
 
     /**
